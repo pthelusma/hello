@@ -11,11 +11,15 @@ import android.widget.Toast;
 
 @SuppressWarnings("unused")
 public class MainActivity extends Activity {
+	
+	MediaPlayer mp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        mp = MediaPlayer.create(this, R.raw.hello_min);
     }
 
 
@@ -28,8 +32,17 @@ public class MainActivity extends Activity {
     
     public void playHello(View view)
     {
-    	MediaPlayer mp = MediaPlayer.create(this, R.raw.paul);
+    	if(mp.isPlaying())
+    	{
+    		mp.stop();
+    		mp = MediaPlayer.create(this, R.raw.hello_min);
+    	}
+    	
     	mp.start();
+    	
+    	if(mp.isPlaying())
+    		Log.d("State",  "Is Playing");
+    	
     	mp.setOnCompletionListener(new OnCompletionListener() {
 			
 			@Override
